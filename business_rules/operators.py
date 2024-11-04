@@ -78,6 +78,10 @@ class StringType(BaseType):
             raise AssertionError(f"{value} is not a valid string")
 
     @type_operator(FIELD_TEXT)
+    def not_equal_to(self, other_string):
+        return self.value == other_string
+
+    @type_operator(FIELD_TEXT)
     def equal_to(self, other_string):
         return self.value == other_string
 
@@ -104,6 +108,10 @@ class StringType(BaseType):
     @type_operator(FIELD_NO_INPUT)
     def non_empty(self):
         return bool(self.value)
+
+    @type_operator(FIELD_TEXT)
+    def one_of(self, value_list):
+        return self.value in value_list
 
 
 @export_type

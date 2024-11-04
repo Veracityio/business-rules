@@ -116,4 +116,5 @@ def do_actions(actions, defined_actions):
 
         params = action.get("params") or {}
         method = getattr(defined_actions, method_name, fallback)
+
         method(**params)
