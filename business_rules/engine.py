@@ -14,12 +14,20 @@ def run_all(rule_list, defined_variables, defined_actions, stop_on_first_trigger
 
 
 def run(rule, defined_variables, defined_actions):
-    conditions, actions = rule["conditions"], rule["actions"]
+    conditions, actions, else_actions = (
+        rule["conditions"],
+        rule["actions"],
+        rule.get("else_actions", None),
+    )
 
     rule_triggered = check_conditions_recursively(conditions, defined_variables)
     if rule_triggered:
         do_actions(actions, defined_actions)
         return True
+
+    if else_actions:
+        do_actions(else_actions, defined_actions)
+
     return False
 
 
